@@ -8,6 +8,7 @@ pet_store = PetStore()
 @allure.feature("Petstore Positive")
 @allure.story("Deleting tests")
 @allure.title("Delete pet")
+@mark.petstore_crud
 @mark.petstore_positive
 @mark.petstore_delete_tests
 @mark.test_delete_pet
@@ -27,6 +28,7 @@ def test_delete_pet():
 @allure.feature("Petstore Negative")
 @allure.story("Deleting tests")
 @allure.title("Delete nonexistent pet")
+@mark.petstore_crud
 @mark.petstore_negative
 @mark.petstore_delete_tests
 @mark.test_delete_nonexistent_pet

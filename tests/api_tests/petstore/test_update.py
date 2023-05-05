@@ -9,6 +9,7 @@ pet_store = PetStore()
 @allure.feature("Petstore Positive")
 @allure.story("Updating tests")
 @allure.title("Update pet")
+@mark.petstore_crud
 @mark.petstore_positive
 @mark.petstore_update_tests
 @mark.test_update_pet
@@ -29,6 +30,7 @@ def test_update_pet():
 @allure.feature("Petstore Negative")
 @allure.story("Updating tests")
 @allure.title("Update nonexistent pet with long ID")
+@mark.petstore_crud
 @mark.petstore_negative
 @mark.petstore_update_tests
 @mark.test_update_nonexistent_long_pet_id

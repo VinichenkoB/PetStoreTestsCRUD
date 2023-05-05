@@ -6,22 +6,20 @@ on:
       test-area:
         description: 'Test area (e.g. rq or Positive, Create or Update; if missing, all tests will be running)'
         required: true
-        default: CRUD
+        default: petstore_crud
         type: choice
         options:
-          - CRUD
-          - Positive
-          - Negative
-          - Create
-          - Read
-          - Update
-          - Delete
+          - petstore_crud
+          - petstore_positive
+          - petstore_negative
+          - petstore_create_tests
+          - petstore_read_tests
+          - petstore_update_tests
+          - petstore_delete_tests
 
 jobs:
   test:
-
     runs-on: ubuntu-latest
-
     env:
       POETRY_VIRTUALENVS_IN_PROJECT: true
     steps:
@@ -29,7 +27,7 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: "3.11.2"
-      - run: pip install poetry==1.1.12
+      - run: pip install poetry==1.4.2
       - name: cache venv
         uses: actions/cache@v2
         with:
@@ -37,7 +35,12 @@ jobs:
           key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
 
       - run: poetry install
+        
+      - name: Install dependencies
+        run: poetry install
 
-      - name: Run tests on lobster
+      - name: Run tests
         run: |
-          pytest -m
+          . .venv/bin/activate
+          pytest -m ${{ github.event.inputs.test-area }}
+          

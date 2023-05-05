@@ -29,18 +29,22 @@ poetry install
 ## Running the Tests
 To run the tests, execute the following command in the project directory:
 
-Run all tests
+Run all tests:
 ```bash
 poetry run pytest
 ```
 
-Run specific tests by decorator name
+Run specific tests by decorator name:
 ```bash
 python -m pytest -m {decorator name}
 ```
-
-Run tests with allure reports
+Example:
 ```bash
-python -m pytest -m petstore --alluredir=allure-results
+pytest -m petstore_create_tests
+```
+
+Run tests with allure reports:
+```bash
+poetry run pytest --alluredir=allure-results
 allure serve allure-results
 ```

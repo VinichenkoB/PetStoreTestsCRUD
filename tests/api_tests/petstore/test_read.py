@@ -1,7 +1,8 @@
 import allure
 from pytest import mark
+from src.api.petstore import PetStore
 
-from src.api.petstore import get_pet_by_status, get_pet_by_id, generate_nonexistent_pet_id
+pet_store = PetStore()
 
 
 @allure.feature("Petstore Positive")
@@ -12,7 +13,7 @@ from src.api.petstore import get_pet_by_status, get_pet_by_id, generate_nonexist
 @mark.test_get_pets_by_status_available
 def test_get_pets_by_status_available():
     with allure.step("Getting pets with status 'available'"):
-        response = get_pet_by_status("available")
+        response = pet_store.get_pet_by_status("available")
     assert response.status_code == 200
     assert len(response.json()) > 0
     for pet in response.json():
@@ -27,7 +28,7 @@ def test_get_pets_by_status_available():
 @mark.test_get_pets_by_status_pending
 def test_get_pets_by_status_pending():
     with allure.step("Getting pets with status 'pending'"):
-        response = get_pet_by_status("pending")
+        response = pet_store.get_pet_by_status("pending")
     assert response.status_code == 200
     assert len(response.json()) > 0
     for pet in response.json():
@@ -42,7 +43,7 @@ def test_get_pets_by_status_pending():
 @mark.test_get_pets_by_status_sold
 def test_get_pets_by_status_sold():
     with allure.step("Getting pets with status 'sold'"):
-        response = get_pet_by_status("sold")
+        response = pet_store.get_pet_by_status("sold")
     assert response.status_code == 200
     assert len(response.json()) > 0
     for pet in response.json():
@@ -57,6 +58,6 @@ def test_get_pets_by_status_sold():
 @mark.test_get_pets_by_status_sold
 def test_find_nonexistent_pet_by_id():
     with allure.step("Finding pet by nonexistent id"):
-        nonexistent_id = generate_nonexistent_pet_id()
-        response = get_pet_by_id(nonexistent_id)
+        nonexistent_id = pet_store.generate_nonexistent_pet_id()
+        response = pet_store.get_pet_by_id(nonexistent_id)
     assert response.status_code == 404

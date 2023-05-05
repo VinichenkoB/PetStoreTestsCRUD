@@ -31,6 +31,9 @@ jobs:
           python-version: "3.11.2"
       - run: pip install poetry==1.4.2
              pip install --upgrade poetry
+      - name: Install pytest
+        run: poetry run pip install pytest
+
       - name: cache venv
         uses: actions/cache@v2
         with:

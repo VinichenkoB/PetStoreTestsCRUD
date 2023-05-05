@@ -19,9 +19,7 @@ on:
 
 jobs:
   test:
-
     runs-on: ubuntu-latest
-
     env:
       POETRY_VIRTUALENVS_IN_PROJECT: true
     steps:
@@ -35,13 +33,15 @@ jobs:
           poetry self update
       - name: Install pytest
         run: poetry run pip install pytest
-
+      - name: Add pytest to PATH
+        run: |
+          echo 'export PATH="$HOME/.local/bin:$PATH"' >> $HOME/.bashrc
+          source $HOME/.bashrc
       - name: cache venv
         uses: actions/cache@v2
         with:
           path: .venv
           key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
-
       - name: Install dependencies
         run: poetry install
         

@@ -1,0 +1,43 @@
+name: Test launcher
+
+on:
+  workflow_dispatch:
+    inputs:
+      test-area:
+        description: 'Test area (e.g. rq or Positive, Create or Update; if missing, all tests will be running)'
+        required: true
+        default: CRUD
+        type: choice
+        options:
+          - CRUD
+          - Positive
+          - Negative
+          - petstore_create_tests
+          - Read
+          - Update
+          - Delete
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+    env:
+      POETRY_VIRTUALENVS_IN_PROJECT: true
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.11.2"
+      - run: pip install poetry==1.1.12
+      - name: cache venv
+        uses: actions/cache@v2
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+
+      - run: poetry install
+
+      - name: Run tests
+        run: |
+          pytest -m {{ github.event.inputs.test-area }}

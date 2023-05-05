@@ -47,5 +47,5 @@ jobs:
         
       - name: Run tests
         run: |
-          /home/runner/.local/bin/pytest -m {{ github.event.inputs.test-area }}
+          python -m pytest -m ${{ github.event.inputs.test-area }}
       

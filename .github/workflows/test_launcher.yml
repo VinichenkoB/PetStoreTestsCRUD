@@ -6,10 +6,10 @@ on:
       test-area:
         description: 'Test area (e.g. rq or Positive, Create or Update; if missing, all tests will be running)'
         required: true
-        default: petstore_delete_tests
+        default: petstore_crud
         type: choice
         options:
-          - CRUD
+          - petstore_crud
           - petstore_positive
           - petstore_negative
           - petstore_create_tests

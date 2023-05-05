@@ -8,6 +8,7 @@ pet_store = PetStore()
 @allure.feature("Petstore Positive")
 @allure.story("Reading tests")
 @allure.title("Get pets by status 'available'")
+@mark.petstore_crud
 @mark.petstore_positive
 @mark.petstore_read_tests
 @mark.test_get_pets_by_status_available
@@ -23,6 +24,7 @@ def test_get_pets_by_status_available():
 @allure.feature("Petstore Positive")
 @allure.story("Reading tests")
 @allure.title("Get pets by status 'pending'")
+@mark.petstore_crud
 @mark.petstore_positive
 @mark.petstore_read_tests
 @mark.test_get_pets_by_status_pending
@@ -38,6 +40,7 @@ def test_get_pets_by_status_pending():
 @allure.feature("Petstore Positive")
 @allure.story("Reading tests")
 @allure.title("Get pets by status 'sold'")
+@mark.petstore_crud
 @mark.petstore_positive
 @mark.petstore_read_tests
 @mark.test_get_pets_by_status_sold
@@ -53,6 +56,7 @@ def test_get_pets_by_status_sold():
 @allure.feature("Petstore Negative")
 @allure.story("Reading tests")
 @allure.title("Find nonexistent pet by id")
+@mark.petstore_crud
 @mark.petstore_negative
 @mark.petstore_read_tests
 @mark.test_get_pets_by_status_sold

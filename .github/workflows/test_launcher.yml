@@ -28,23 +28,14 @@ jobs:
         with:
           python-version: "3.11.2"
       - name: Install poetry
+        uses: dschep/install-poetry-action@v1.3
+
+      - name: Configure poetry
         run: |
-          pip install poetry==1.4.2
-          poetry self update
-      - name: Install pytest
-        run: poetry run pip install pytest
-      - name: Add pytest to PATH
-        run: |
-          echo 'export PATH="$HOME/.local/bin:$PATH"' >> $HOME/.bashrc
-          source $HOME/.bashrc
-      - name: cache venv
-        uses: actions/cache@v2
-        with:
-          path: .venv
-          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
-      - name: Install dependencies
-        run: poetry install
-      - name: Activate virtual environment
-        run: source .venv/bin/activate
+          poetry config virtualenvs.create true
+          poetry config virtualenvs.in-project false
+          poetry config cache-dir ~/.poetry
+          poetry config virtualenvs.path ~/.poetry/venv
+        
       - name: Run tests
         run: pytest -m ${{ github.event.inputs.test-area }}

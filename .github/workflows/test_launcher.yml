@@ -29,7 +29,8 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: "3.11.2"
-      - run: pip install poetry==1.1.12
+      - run: pip install poetry==1.4.2
+             pip install --upgrade poetry
       - name: cache venv
         uses: actions/cache@v2
         with:

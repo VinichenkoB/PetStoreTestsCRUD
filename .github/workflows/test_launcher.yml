@@ -6,16 +6,16 @@ on:
       test-area:
         description: 'Test area (e.g. rq or Positive, Create or Update; if missing, all tests will be running)'
         required: true
-        default: CRUD
+        default: petstore_delete_tests
         type: choice
         options:
           - CRUD
-          - Positive
-          - Negative
+          - petstore_positive
+          - petstore_negative
           - petstore_create_tests
-          - Read
-          - Update
-          - Delete
+          - petstore_read_tests
+          - petstore_update_tests
+          - petstore_delete_tests
 
 jobs:
   test:
@@ -46,6 +46,5 @@ jobs:
         run: poetry install
       - name: Activate virtual environment
         run: source .venv/bin/activate
-        
       - name: Run tests
-        run: /home/runner/work/bin/pytest -m ${{ github.event.inputs.test-area }}
+        run: pytest -m ${{ github.event.inputs.test-area }}

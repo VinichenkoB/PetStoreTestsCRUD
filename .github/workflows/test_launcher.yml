@@ -44,8 +44,7 @@ jobs:
           key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
       - name: Install dependencies
         run: poetry install
-        
+      - name: Activate virtual environment
+        run: source .venv/bin/activate
       - name: Run tests
-        run: |
-          python -m pytest -m ${{ github.event.inputs.test-area }}
-      
+        run: python -m pytest -m ${{ github.event.inputs.test-area }}

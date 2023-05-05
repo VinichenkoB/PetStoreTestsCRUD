@@ -1,8 +1,8 @@
 import allure
 from pytest import mark
+from src.api.petstore import PetStore
 
-from src.api.petstore import add_new_pet, get_pet_by_id, generate_unsupported_pet_id, \
-                             pet_identifier, pet_name, pet_status
+pet_store = PetStore()
 
 
 @allure.feature("Petstore Positive")
@@ -12,16 +12,17 @@ from src.api.petstore import add_new_pet, get_pet_by_id, generate_unsupported_pe
 @mark.petstore_create_tests
 @mark.test_add_new_pet
 def test_add_new_pet():
+    pet_id = pet_store.generate_nonexistent_pet_id()
     with allure.step("Adding new pet"):
-        response = add_new_pet(pet_identifier, pet_name, pet_status)
+        response = pet_store.add_new_pet(pet_id, pet_store.pet_name, pet_store.pet_status)
     assert response.status_code == 200
-    assert response.json()['name'] == pet_name
-    assert response.json()['status'] == pet_status
+    assert response.json()['name'] == pet_store.pet_name
+    assert response.json()['status'] == pet_store.pet_status
     with allure.step("Getting pet by id"):
-        response = get_pet_by_id(pet_identifier)
+        response = pet_store.get_pet_by_id(pet_id)
     assert response.status_code == 200
-    assert response.json()['name'] == pet_name
-    assert response.json()['status'] == pet_status
+    assert response.json()['name'] == pet_store.pet_name
+    assert response.json()['status'] == pet_store.pet_status
 
 
 @allure.feature("Petstore Negative")
@@ -31,6 +32,7 @@ def test_add_new_pet():
 @mark.petstore_create_tests
 @mark.test_add_new_pet_nonexistent_long_id
 def test_add_new_pet_with_nonexistent_long_id():
+    long_pet_id = pet_store.generate_unsupported_pet_id()
     with allure.step("Adding new pet with unsupported id"):
-        response = add_new_pet(generate_unsupported_pet_id(), pet_name, pet_status)
+        response = pet_store.add_new_pet(long_pet_id, pet_store.pet_name, pet_store.pet_status)
     assert response.status_code == 500
